@@ -1,0 +1,2 @@
+# Hello World!
+I created this to solve a very specific problem. In my town, there is no easy way to just, get the current temperature. It's always the temperature of the closest cites, which are about 20km away, and in that distance the temperature average can change. I found this amazing Open-Source Weather data JSON that can grab the current temperature of anywhere on the planet! I just had to make this website to contain it all. As a bonus, I just through in a percipitation checker, that can tell you whether or not it is raining.
