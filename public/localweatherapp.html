@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <style>
+            body {
+                padding: 60;
+                font-size: 18;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><u>Welcome to Weather app</u></h1>
+        <h2><i>Mission, BC</i></h2>
+        <br>
+        <p id="timeDisplay">Time of page load:</p>
+        
+        <script>
+            let now = new Date();
+
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+
+            let timeFormated
+            timeFormated = `Time of page load: ${hours}:${minutes} and ${seconds} seconds`
+
+
+            document.getElementById("timeDisplay").innerText = timeFormated
+        </script>
+        <br>
+        <p><u><i><b>Current Average Temperature:</b></i></u></p>
+        <p id="temperatureDisplay"></p>
+        <script>
+            
+        </script>
+    </body>
+</html>
