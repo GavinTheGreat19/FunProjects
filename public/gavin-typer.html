@@ -33,6 +33,7 @@
             let choice = 0;
             let i = 0;
             let message = null;
+            var talkNoise = new Audio('SND_TXT1.wav');
 
             function startDude() {
                 let choice = Math.floor(Math.random() * outputs.length)
@@ -47,6 +48,10 @@
                 if (message.length > i) {
                 output.innerText += message.charAt(i);
                 i += 1;
+                if (message.charAt(i) !== " ") {
+                talkNoise.currentTime = 0
+                talkNoise.play();
+                }
                 setTimeout(typer, 50);
                 }
             }
