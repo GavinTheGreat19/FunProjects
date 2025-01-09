@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <style>
+        </style>
+    </head>
+    <body>
+        <h1>GAVIN!!!</h1>
+        <img id="GAVIN" src="front.gif" style="position: absolute; top: 150px; left: 150px;">
+
+        <script>
+            let gavin = document.getElementById("GAVIN");
+            let isMoving = false;
+
+
+            function moveRight() {
+                gavin.style.left = parseInt(gavin.style.left) + 2 + "px"
+                if (isMoving == true){
+                    setTimeout(moveRight, 8);
+                } 
+            }
+            
+            function moveLeft() {
+                gavin.style.left = parseInt(gavin.style.left) - 2 + "px"
+                if (isMoving == true){
+                    setTimeout(moveLeft, 8);
+                }
+            }
+
+            function moveUp() {
+                gavin.style.top = parseInt(gavin.style.top) - 2 + "px"
+                if (isMoving == true){
+                    setTimeout(moveUp, 8);
+                }
+            }
+
+            function moveDown() {
+            gavin.style.top = parseInt(gavin.style.top) + 2 + "px"
+            if (isMoving == true){
+                    setTimeout(moveDown, 8);
+                }
+            }
+
+            window.addEventListener("keydown", function() {
+            let key = event.key
+
+            if ((key == 'd' || key == 'D') && isMoving == false) {
+                isMoving = true;
+                gavin.src = "walkR.gif"
+                moveRight();
+            }
+
+            if ((key == 'a' || key == 'A') && isMoving == false) {
+                isMoving = true;
+                gavin.src = "walkL.gif"
+                moveLeft();
+            }
+
+            if ((key == 'w' || key == 'W') && isMoving == false) {
+                isMoving = true;
+                gavin.src = "WalkBack.gif"
+                moveUp();
+            }
+            
+            if ((key == 's' || key == 'S') && isMoving == false) {
+                isMoving = true;
+                gavin.src = "frontwalk.gif"
+                moveDown();
+            }
+
+        })
+
+            window.addEventListener("keyup", function() {
+            let key = event.key
+
+            if (key == 'd' || key == 'D') {
+                isMoving = false;
+                gavin.src = "sideR.png"
+            }
+
+            if (key == 'a' || key == 'A') {
+                isMoving = false
+                gavin.src = "sideL.png"
+            }
+
+            if (key == 's' || key == 'S') {
+                isMoving = false
+                gavin.src = "front.gif"
+            }
+
+            if (key == 'w' || key == 'W') {
+                isMoving = false
+                gavin.src = "back.png"
+            }
+
+            })
+        </script>
+    </body>
+</html>
