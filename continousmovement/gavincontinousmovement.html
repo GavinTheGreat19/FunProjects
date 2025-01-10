@@ -2,39 +2,87 @@
     <head>
         <style>
             body {
-                background-image: url('floor2.png');
+                background-image: url('checkerGrey.png');
                 font-family: 'Times New Roman', Times, serif;
                 color: white;
                 padding: 20px;
                 text-shadow: 2px 2px 10px black;
+                background-color: black;
             }
 
             #player {
-                filter: drop-shadow(0px 0px 4px grey);
+                filter: drop-shadow(0px 0px 2px white);
             }
 
-            #bunnyBlue {
-                filter: drop-shadow(0px 0px 6px cyan);
-            }
-            
-            #speech {
-                text-shadow: 0px 0px 3px cyan;
-                font-size: x-large;
+            #donut {
+                filter: drop-shadow(0px 0px 2px white);
             }
         </style>
     </head>
-    <body>
-        <h1>Gavin's Level One</h1>
-        <p><i>project name</i></p>
-        <img id="player" src="FrontIdle.gif" style="position: absolute; top: 150px; left: 150px;">
-        <img id="bunnyBlue" src="bunnyBlue.png" style="position: absolute; top:200px; left: 400px;">
+    <body id="mainBody">
+        <audio id="bgmusic" src="wizardmusic.mp3"></audio>
+        <audio id="winnersound" src="win.mp3"></audio>
+        <h1>Gavin's Level Two</h1>
+        <p><i>The Wizard, And the Custom Animated Continous Movment Script</i></p>
 
-        <p id="speech" style="position: absolute; top:350px; left: 350px;">""</p>
+        <img id="player" src="FrontIdle.gif" style="position: absolute; top: 150px; left: 250px;">
+
+        <!-- Blocks and Shit:-->
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 200px; left: 100px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 100px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 400px; left: 100px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 500px; left: 100px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 100px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 200px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 300px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 400px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 500px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 800px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 600px; left: 900px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 500px; left: 900px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 400px; left: 900px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 900px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 800px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 700px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 600px">
+        <img class="wall" src="brickwall.png" style="width: 100; height: 100; position: absolute; top: 300px; left: 500px">
+
+        <!-- End of Blocks and Shit-->
+        <img id="donut"src="donut128.png" style="position: absolute; top: 750px; left: 650px">
         
 
-        <input type="button", value="Sure!", style="position: absolute; top: 350px; left: 250px;">
-
         <script>
+
+            let gameEnd = false;
+
+            document.addEventListener('click', () => {
+
+               audioMusic.play();
+            })
+
+            
+            let audioMusic = document.getElementById("bgmusic");
+           
+
+                let positionX = 1;
+                let positionY = 1;
+                let speedX = 1;
+                let speedY = 1; 
+            
+
+            function backGroundMover() {
+                
+                myClock = setInterval(() => {
+                positionX += speedX;
+                positionY += speedY;
+
+                document.getElementById("mainBody").style.backgroundPosition = `${positionX}px ${positionY}px`;
+            }, 20);
+            }
+
+            backGroundMover();
+
+    
             let player = document.getElementById("player");
             let isMovingRight = false;
             let isMovingDown  = false;
@@ -75,6 +123,7 @@
             window.addEventListener("keydown", function() {
             let key = event.key
             hasMoved = true;
+            
 
             if ((key == 'd' || key == 'D') && isMovingRight == false) {
                 isMovingRight = true;
@@ -127,6 +176,67 @@
             }
 
             })
+
+
+            //Time for collision code!! Love it!
+
+            function isCollidingWall() {
+		let walls = document.getElementsByClassName('wall');
+        let playerOne = document.getElementById("player");
+
+		let rect1 = playerOne.getBoundingClientRect();;
+
+		    for (let i = 0; i < walls.length; i++) {
+        let wall = walls[i].getBoundingClientRect();  // Get bounding box for each wall
+
+        let horizontalOverlapWall = rect1.right > wall.left && rect1.left < wall.right;
+        let verticalOverlapWall = rect1.bottom > wall.top && rect1.top < wall.bottom;
+
+        // If there's a collision with any wall, return true
+        if (horizontalOverlapWall && verticalOverlapWall) {
+            location.reload()
+            console.log("penis")
+        }
+    }
+		
+	     }
+
+         function isCollidingCake() {
+		let cakeo = document.getElementById('donut');
+        let playerOne = document.getElementById("player");
+
+		let rect1 = playerOne.getBoundingClientRect();
+        let cake = cakeo.getBoundingClientRect();
+
+
+        let horizontalOverlap = rect1.right > cake.left && rect1.left < cake.right;
+        let verticalOverlap = rect1.bottom > cake.top && rect1.top < cake.bottom;
+
+        // If there's a collision with any donut return true
+        if (horizontalOverlap && verticalOverlap) {
+
+            let audioWin = document.getElementById("winnersound");
+            audioWin.play();
+            console.log("penis")
+            
+            setTimeout(function(){
+                alert("You have won this level! go back to main page for next level");
+            }, 2000)
+        }
+    }
+          
+         
+         //Gotta fucking check every time interval because Continous movement.
+         shitass()
+
+         function shitass(){
+            isCollidingWall();
+            isCollidingCake();
+            setTimeout(shitass, 20);
+         }
+
+
+
         </script>
     </body>
 </html>
