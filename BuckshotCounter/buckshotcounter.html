@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <style>
+            body {
+                background-color: black;
+                background: linear-gradient(to bottom, #180100, #180100, black);
+                color: whitesmoke;
+                font-size: xx-large;
+                font-family: 'Courier New', Courier, monospace;
+                padding: 10;
+                font-weight: bold;
+            }
+            .hack {
+                text-shadow: 0px 0px 5px lime;
+            }
+            .shells {
+                height: 256px;
+            }
+            .fancy {
+                text-shadow: 0px 0px 5px white;
+                font-family: 'Times New Roman', Times, serif
+            }
+            .button {
+                height: 128;
+                width: 128;
+                font-family: 'Courier New', Courier, monospace;
+                border: 2px solid
+            }
+
+            .button:active{
+                transform: scale(0.95)
+            }
+            .plus {
+                background-image: url("plus.png");
+            }
+
+            .minus {
+                background-image: url("MINUS.png");
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="fancy">BUCKSHOT COUNTER</h1>
+        <p class="hack">LIVE ROUNDS:</p>
+
+        <div id="liveRounds" class="shells">
+
+
+
+        </div>
+
+        <br>
+
+        <br>
+        <div>
+            <input type="button" class="minus button" onclick="{removeLive()}">
+            <input type="button" class="plus button" onclick="{addLive()}">
+        </div>
+
+        <p class="hack">BLANK ROUNDS:</p>
+
+        <div id="blankRounds" class="shells">
+
+
+
+        </div>
+
+        <br>
+
+        <div>
+            <input type="button" class="minus button" onclick="{removeBlank()}">
+            <input type="button" class="plus button" onclick="{addBlank()}">
+        </div>
+        
+        <br>
+        <p class="hack">PERCENTAGES:</p>
+        <p class="hack" id="liveChance">Chance of a Live Round:</p>
+        <p class="hack" id="blankChance">Chance of a Blank Round:</p>
+
+        <script>
+            let liveRoundsLeft = 0
+            let blankRoundsLeft = 0
+
+            let blankRounds = document.getElementById("blankRounds");
+            let liveRounds = document.getElementById("liveRounds");
+
+
+            function addLive() {
+                if (liveRoundsLeft < 8) {
+
+                    let liveShell = document.createElement('img');
+                    liveShell.src = "live.png";
+                    liveShell.className = "shells";
+                    liveRounds.appendChild(liveShell);
+                    liveRoundsLeft += 1;
+
+                    checkPercentage()
+                }
+            }
+
+            function removeLive() {
+                if (liveRoundsLeft > 0) {
+
+                    liveRoundsLeft -= 1;
+                    liveRounds.removeChild(liveRounds.lastChild);
+
+                    checkPercentage()
+                }
+            }
+
+            function addBlank() {
+                if (blankRoundsLeft < 8) {
+
+                    let blankShell = document.createElement('img');
+                    blankShell.src = "blank.png"
+                    blankShell.className = "shells";
+                    blankRounds.appendChild(blankShell);
+                    blankRoundsLeft += 1;
+
+                    checkPercentage()
+                }
+            }
+
+            function removeBlank() {
+                if (blankRoundsLeft > 0) {
+
+                    blankRoundsLeft -= 1;
+                    blankRounds.removeChild(blankRounds.lastChild)
+
+                    checkPercentage()
+                }
+            }
+
+            //I have wrote out LIVE, BLANK, and SHELL so many times they don't even look like words anymore. Also it's like 1:39AM and I should be sleeping instead of making some pointless webpage that no one will use.
+
+            function checkPercentage() {
+                let chanceOfLive = Math.ceil((liveRoundsLeft / (blankRoundsLeft + liveRoundsLeft)) * 100)
+
+                    if (!isNaN(chanceOfLive)) {
+                document.getElementById("liveChance").innerText = `Chance of a Live Round: ${chanceOfLive}%`
+                    } else {document.getElementById("liveChance").innerText = `Chance of a Live Round: 0%`}
+
+                let chanceofBlank = Math.ceil((blankRoundsLeft / (blankRoundsLeft + liveRoundsLeft)) * 100)
+
+                    if (!isNaN(chanceofBlank)) {
+                document.getElementById("blankChance").innerText = `Chance of a Blank Round: ${chanceofBlank}%`
+                    } else {document.getElementById("blankChance").innerText = `Chance of a Blank Round: 0%`}
+
+                    //this math is actually pretty cool I think. I haven't really used math in JavaScript too much before now.
+            }
+        </script>
+
+    </body>
+</html>
