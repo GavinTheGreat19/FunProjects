@@ -13,6 +13,6 @@ Over time I just kept adding more and more stuff until I thought it was appropri
 
 I tried to make the shotgun as fun as I could to interact with. You have to click it once to rack it, and then once more to fire it. The gun uses the before mentioned
 probabilities to determine whether or not to fire a live round or a blank round. It will automatically fire a blank if there is no ammo for the gun. It also will subtract
-ammo from the counter to further simulate the gun. This effectively allows you to play a very bare bones version of **Buckshot Roulette* in your browser.
+ammo from the counter to further simulate the gun. This effectively allows you to play a very bare bones version of *Buckshot Roulette* in your browser.
 
 I hope you enjoy!
