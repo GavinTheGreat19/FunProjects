@@ -16,3 +16,5 @@ probabilities to determine whether or not to fire a live round or a blank round.
 ammo from the counter to further simulate the gun. This effectively allows you to play a very bare bones version of *Buckshot Roulette* in your browser.
 
 I hope you enjoy!
+
+P.S. I Recomend Using CTRL + Mouse Wheel to zoom out to fit the whole page.
