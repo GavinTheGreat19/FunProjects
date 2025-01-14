@@ -4,7 +4,7 @@
         <style>
             body {
                 background-color: black;
-                background: linear-gradient(to bottom, #180100, #180100, black);
+                background: linear-gradient(to bottom, #180100, #180100, #180100, black);
                 color: whitesmoke;
                 font-size: xx-large;
                 font-family: 'Courier New', Courier, monospace;
@@ -37,6 +37,17 @@
 
             .minus {
                 background-image: url("MINUS.png");
+            }
+            #shotgun{
+                background-image: url("shotgun.png");
+                background-color: #180100;
+                border: 2px solid;
+                height: 128;
+                width: 768;
+            }
+            
+            #shotgun:active{
+                transform: scale(0.95)
             }
         </style>
     </head>
@@ -75,15 +86,28 @@
         
         <br>
         <p class="hack">PERCENTAGES:</p>
-        <p class="hack" id="liveChance">Chance of a Live Round:</p>
-        <p class="hack" id="blankChance">Chance of a Blank Round:</p>
+        <p class="hack" id="liveChance">Chance of a Live Round: 0%</p>
+        <p class="hack" id="blankChance">Chance of a Blank Round: 0%</p>
+        <br>
+        <p class="hack">TEST YOUR LUCK?:</p>
+        <input type="button" id="shotgun" onclick="{useGun()}">
+        <p class="hack">Click the Shotgun to use it.</p>
 
         <script>
+
+
             let liveRoundsLeft = 0
             let blankRoundsLeft = 0
 
             let blankRounds = document.getElementById("blankRounds");
             let liveRounds = document.getElementById("liveRounds");
+
+            let fireBlank = new Audio('gunshot_blank.wav');
+            let fireLive = new Audio('gunshot_live.wav')
+            let shellAdd = new Audio('shelladd.ogg')
+            let shellDrop = new Audio('shelldrop1.ogg')
+            let rack = new Audio('rackshotgun.ogg')
+
 
 
             function addLive() {
@@ -94,6 +118,8 @@
                     liveShell.className = "shells";
                     liveRounds.appendChild(liveShell);
                     liveRoundsLeft += 1;
+                    shellAdd.currentTime = 0;
+                    shellAdd.play();
 
                     checkPercentage()
                 }
@@ -104,6 +130,10 @@
 
                     liveRoundsLeft -= 1;
                     liveRounds.removeChild(liveRounds.lastChild);
+                    shellAdd.currentTime = 0;
+                    shellAdd.play();
+                    shellDrop.currentTime = 0;
+                    shellDrop.play();
 
                     checkPercentage()
                 }
@@ -117,6 +147,8 @@
                     blankShell.className = "shells";
                     blankRounds.appendChild(blankShell);
                     blankRoundsLeft += 1;
+                    shellAdd.currentTime = 0
+                    shellAdd.play();
 
                     checkPercentage()
                 }
@@ -127,6 +159,10 @@
 
                     blankRoundsLeft -= 1;
                     blankRounds.removeChild(blankRounds.lastChild)
+                    shellAdd.currentTime = 0;
+                    shellAdd.play();
+                    shellDrop.currentTime = 0;
+                    shellDrop.play();
 
                     checkPercentage()
                 }
@@ -148,6 +184,41 @@
                     } else {document.getElementById("blankChance").innerText = `Chance of a Blank Round: 0%`}
 
                     //this math is actually pretty cool I think. I haven't really used math in JavaScript too much before now.
+            }
+
+            let isRacked = false;
+
+            function useGun() {
+
+            let ammo = (liveRoundsLeft + blankRoundsLeft)
+            let chanceOfLive = Math.ceil((liveRoundsLeft / (blankRoundsLeft + liveRoundsLeft)) * 100)
+
+                if (isRacked == false) {
+                    isRacked = true;
+                    rack.currentTime = 0;
+                    rack.play();
+                } else if (ammo <= 0) {
+                    isRacked = false;
+                    rack.currentTime = 0;
+                    fireBlank.currentTime = 0;
+                    fireBlank.play();
+                } else if (ammo > 0) {
+                    isRacked = true
+                    randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                    if (randomNumber < chanceOfLive) {
+                        fireLive.currentTime = 0;
+                        fireLive.play();
+                        isRacked = false;
+                        removeLive();
+                    } else {
+                        fireBlank.currentTime = 0;
+                        fireBlank.play();
+                        isRacked = false;
+                        removeBlank();
+                    }
+                }
+
             }
         </script>
 
